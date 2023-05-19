@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="main.css">
 </head>
 <body>
-    <h1>Scissors, Paper, Stone</h1>
+    <h1 class="title">Scissors, Paper, Stone</h1>
     <div class="selection">
         <button onclick="playGame('Scissors')">✌️</button>
         <button onclick="playGame('Paper')">✋</button>
@@ -17,12 +17,36 @@
 
     <div class="results">
         <div class="div"><h1>You <span id="playerScore" class="result-score">0</span></h1></div>
-        <div class="div"><h1>CPU <span id="cpuScore" class="result-score">0</span></h1></div>
+        <div class="div"><h1>CPU <span id="cpuScore" class="result-score">0</span></h1></div>     
+    </div>
+    <div class="reset-button">
+        <button onclick="resetScores()">RESET</button>
     </div>
 
     <script>
-        let playerScore = 0;
-        let cpuScore = 0;
+        let score = {
+            playerScore: 0,
+            cpuScore: 0
+        };
+
+        const storedScore = JSON.parse(localStorage.getItem('score'));
+        if (storedScore) {
+            score = storedScore;
+        } else {
+            localStorage.setItem('score', JSON.stringify(score));
+        }
+
+        function updateScoreboard() {
+            document.getElementById('playerScore').textContent = score.playerScore;
+            document.getElementById('cpuScore').textContent = score.cpuScore;
+        }
+
+        function resetScores() {
+            score.playerScore = 0;
+            score.cpuScore = 0;
+            localStorage.setItem('score', JSON.stringify(score));
+            updateScoreboard();
+        }
 
         function playGame(playerMove) {
             const moves = ['Scissors', 'Paper', 'Stone'];
@@ -39,18 +63,20 @@
                 (playerMove === 'Stone' && computerMove === 'Scissors')
             ) {
                 result = 'You Win';
-                playerScore++;
+                score.playerScore++;
             } else {
-                result = 'You Lose.';
-                cpuScore++;
+                result = 'You Lose';
+                score.cpuScore++;
             }
 
-            alert(`You pick ${playerMove}. Computer picks ${computerMove}. ${result}`);
+            localStorage.setItem('score', JSON.stringify(score));
 
-            // Update the scoreboard
-            document.getElementById('playerScore').textContent = playerScore;
-            document.getElementById('cpuScore').textContent = cpuScore;
+            alert (`You pick ${playerMove}. Computer picks ${computerMove}. ${result}`);
+
+            updateScoreboard();
         }
+
+        updateScoreboard();
     </script>
 </body>
 </html>
