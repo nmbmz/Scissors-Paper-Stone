@@ -3,12 +3,16 @@
     padding: 0;
 }
 
+.title {
+    margin-top: 10px;
+}
+
 .selection {
     display: flex;
     justify-content: center;
 }
 
-button {
+.selection button {
     height : 100px;
     width: 100px;
     padding: 10px;
@@ -42,4 +46,20 @@ h1 {
     margin-left : .1rem;
     font-size: 1.5rem;
     color: grey;
+}
+
+.reset-button {
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+    align-content: center;
+    align-items: center;
+}
+.reset-button button {
+    margin-top: 8px;
+    font-size : 1.5rem;
+    padding: 3px;
+    border: 2px solid black;
+    background-color: azure;
+    border-radius: 10px;
 }
